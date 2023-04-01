@@ -69,7 +69,7 @@ func (s *TriggerServer) githubHandler(resp http.ResponseWriter, req *http.Reques
 	var imageName, imageTag string
 
 	switch hookEvent {
-	case "package_v2":
+	case "package":
 		payload := new(githubPackageV2Webhook)
 		if err := json.NewDecoder(req.Body).Decode(payload); err != nil {
 			log.WithFields(log.Fields{
@@ -102,6 +102,7 @@ func (s *TriggerServer) githubHandler(resp http.ResponseWriter, req *http.Reques
 			return
 		}
 
+        fmt.Fprintf(resp, "test")
 		imageName = strings.Join(
 			[]string{"ghcr.io", payload.Package.Namespace, payload.Package.Name},
 			"/",
